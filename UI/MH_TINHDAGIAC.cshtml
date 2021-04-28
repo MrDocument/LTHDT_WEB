@@ -1,0 +1,46 @@
+﻿@using LTHDT_WEB.Services;
+@using LTHDT_WEB.Entities;
+
+
+@{
+    Layout = null;
+
+    string StringOut = string.Empty;
+
+    if (IsPost)
+    {
+        string chuoidagiac = Request["dagiac"];
+
+        var services = new XL_DAGIAC();
+        var kq = services.KhoiTao(chuoidagiac);
+
+        if (kq.IsSuccess)
+        {
+            var kc = kq.Data.ChuViDaGiac();
+            StringOut = $"Ket qua la {kc}";
+        } else
+        {
+            StringOut = kq.ErrorMessage;
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_TINHDAGIAC.cshtml" method="post">
+            <label for="name">Nhap chuoi da giac</label><br />
+            <input type="text" name="dagiac" value="(2,3)|(3,4)|(2,1)" /><br />
+
+            <input type="submit" name="submit" />
+        </form>
+        @StringOut
+    </div>
+</body>
+</html>

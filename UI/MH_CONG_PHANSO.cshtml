@@ -1,0 +1,62 @@
+﻿@using LTHDT_WEB.Services;
+@using LTHDT_WEB.Entities;
+
+@{
+    Layout = null;
+
+    string Chuoi = string.Empty;
+
+    if (IsPost)
+    {
+        int x1, y1, x2, y2;
+        x1 = int.Parse(Request["x1"]);
+        y1 = int.Parse(Request["y1"]);
+        x2 = int.Parse(Request["x2"]);
+        y2 = int.Parse(Request["y2"]);
+
+        var services = new XL_PHANSO();
+        var kq = services.TinhTong2PhanSo(x1, y1, x2, y2);
+
+        if (kq.IsSuccess)
+        {
+            Chuoi = "Ket qua la " + kq.Data.XuatPhanSo();
+        }
+        else
+        {
+            Chuoi = kq.ErrorMessage;
+        }
+
+
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Cong Phan So</title>
+
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_CONG_PHANSO.cshtml" method="post">
+
+            <label for="fname">Nhap tu so 1:</label><br />
+            <input type="text" name="x1" value="0"/><br />
+            <label for="lname">Nhap mau so 1:</label><br />
+            <input type="text" name="y1" value="1"/><br /><br />
+
+            <label for="fname">Nhap tu so 2:</label><br />
+            <input type="text" name="x2" value="0"/><br />
+            <label for="lname">Nhap mau so 2:</label><br />
+            <input type="text" name="y2" value="1"/><br />
+
+            <input type="submit" name="Submit"/><br />
+
+        </form>
+    </div>
+    @Chuoi
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿@using LTHDT_WEB.Entities
+@using LTHDT_WEB.Services
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    var masp = int.Parse(Request["id"]);
+    SANPHAM sp = null;
+    var xl = new XL_SANPHAM();
+
+    if (IsPost)
+    {
+        var tenSanPham = Request["tensp"];
+        var giaSanPham = int.Parse(Request["giasp"]);
+        sp = new SANPHAM(masp, tenSanPham,giaSanPham);
+        xl.SuaSanPham(sp);
+        Response.Redirect("~/UI/MH_SANPHAM.cshtml");
+    }
+    else
+    {
+        sp = xl.DocSanPham(masp);
+        if(sp == null)
+        {
+            Chuoi = "San pham khong ton tai";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>  
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_SUA_SANPHAM.cshtml?id=@masp" method="post">
+            <label for="tensp">Tên sản phẩm</label><br />
+            <input type="text" name="tensp" value="@if (sp != null) {@sp.tenSp}"/><br />
+            <label for="giasp">Giá</label><br />
+            <input type="text" name="giasp" value="@if (sp != null) {@sp.giaSp} "/><br />
+            <input type="submit" name="Sửa"></><br />
+        </form>
+    </div>
+    @Chuoi
+</body>
+</html>

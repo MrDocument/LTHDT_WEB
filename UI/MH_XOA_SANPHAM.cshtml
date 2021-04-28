@@ -1,0 +1,41 @@
+﻿@using LTHDT_WEB.Entities
+@using LTHDT_WEB.Services
+
+@{
+    Layout = null;
+
+    string chuoi = string.Empty;
+    var xl = new XL_SANPHAM();
+    string keyword = string.Empty;
+
+    if (IsPost)
+    {
+        keyword = Request["keyword"];
+        List<SANPHAM> dsSanPham = xl.XoaSanPham(keyword);
+        Response.Redirect("~/UI/MH_SANPHAM.cshtml");
+
+    }
+
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_XOA_SANPHAM.cshtml" method="post">
+            <label for="timkiem">Nhập tên SP muốn xóa</label><br />
+            <input type="text" name="keyword" /><br />
+            <input type="submit" name="submit"></><br />
+        </form>
+        
+
+    </div>
+</body>
+</html>

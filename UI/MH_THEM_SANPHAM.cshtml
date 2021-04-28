@@ -1,0 +1,35 @@
+﻿@using LTHDT_WEB.Entities
+@using LTHDT_WEB.Services
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+
+    if (IsPost)
+    {
+
+        var tenSanPham = Request["tensp"];
+        var giaSanPham = int.Parse(Request["giasp"]);
+        var xl = new XL_SANPHAM();
+        xl.ThemSanPham(tenSanPham, giaSanPham);
+        Response.Redirect("~/UI/MH_SANPHAM.cshtml");
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <form action="~/UI/MH_THEM_SANPHAM.cshtml" method="post">
+        <label for="tensp">Tên sản phẩm</label><br />
+        <input type="text" name="tensp" /><br />
+        <label for="giasp">Giá</label><br />
+        <input type="text" name="giasp" /><br />
+        <input type="submit" name="Thêm"></><br />
+    </form>
+</body>
+</html>

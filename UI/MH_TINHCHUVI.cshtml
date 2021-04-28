@@ -1,0 +1,57 @@
+﻿@using LTHDT_WEB.Services;
+@using LTHDT_WEB.Entities;
+
+@{
+    Layout = null;
+    string Chuoi = string.Empty;
+    if (IsPost)
+    {
+        int x1, y1, x2, y2, x3, y3;
+        x1 = int.Parse(Request["x1"]);
+        y1 = int.Parse(Request["y1"]);
+        x2 = int.Parse(Request["x2"]);
+        y2 = int.Parse(Request["y2"]);
+        x3 = int.Parse(Request["x3"]);
+        y3 = int.Parse(Request["y3"]);
+
+        var services = new XL_TAMGIAC();
+        var kq = services.TinhChuVi(x1, y1, x2, y2, x3, y3);
+
+        if (kq.IsSuccess)
+        {
+            Chuoi = $"Ket qua la {kq.Data}";
+        } else
+        {
+            Chuoi = kq.ErrorMessage;
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_TINHCHUVI.cshtml" method="post">
+            <label for="fname">X1: </label><br />
+            <input type="text" name="x1" /><br />
+            <label for="lname">Y1: </label><br />
+            <input type="text" name="y1" /><br />
+            <label for="fname">X2: </label><br />
+            <input type="text" name="x2" /><br />
+            <label for="lname">Y2: </label><br />
+            <input type="text" name="y2" /><br />
+            <label for="fname">X3: </label><br />
+            <input type="text" name="x3" /><br />
+            <label for="lname">Y3: </label><br />
+            <input type="text" name="y3" /><br />
+            <input type="submit" name="Submit" />
+        </form>
+        @Chuoi
+    </div>
+</body>
+</html>

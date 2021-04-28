@@ -1,0 +1,47 @@
+﻿@using LTHDT_WEB.Entities
+@using LTHDT_WEB.Services
+
+@{
+    Layout = null;
+
+    string chuoi = string.Empty;
+
+    if (IsPost)
+    {
+        int x1, y1, x2, y2;
+        x1 = int.Parse(Request["x1"]);
+        y1 = int.Parse(Request["y1"]);
+        x2 = int.Parse(Request["x2"]);
+        y2 = int.Parse(Request["y2"]);
+
+        var services = new XL_DIEM();
+        double kq = services.TinhKhoangCachDiem(x1 , y1, x2, y2);
+
+        chuoi = $"Ket qua la {kq}";
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_KHOANGCACH_DIEM.cshtml" method="post">
+            <label for="fname">X1: </label><br />
+            <input type="text" name="x1" /><br />
+            <label for="lname">Y1: </label><br />
+            <input type="text" name="y1" /><br />
+            <label for="fname">X2: </label><br />
+            <input type="text" name="x2" /><br />
+            <label for="lname">Y2: </label><br />
+            <input type="text" name="y2" /><br />
+            <input type="submit" name="Submit" />
+        </form>
+    </div>
+    @chuoi
+</body>
+</html>

@@ -1,0 +1,84 @@
+﻿@using LTHDT_WEB.Entities
+@using LTHDT_WEB.Services
+
+@{
+    Layout = null;
+
+    string chuoi = string.Empty;
+    var xl = new XL_SANPHAM();
+    string keyword = string.Empty;
+
+    if (IsPost)
+    {
+        keyword = Request["keyword"];
+    }
+    List<SANPHAM> dsSanPham = xl.TimSanPham(keyword);
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <style>
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #customers td, #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #customers tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #customers tr:hover {
+                background-color: #ddd;
+            }
+
+            #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="~/UI/MH_SANPHAM.cshtml" method="post">
+            <label for="timkiem">Nhập từ khóa</label><br />
+            <input type="text" name="keyword" /><br />
+            <input type="submit" name="submit"></><br />
+            <a href="~/UI/MH_THEM_SANPHAM.cshtml">Thêm sản phẩm</a>
+        </form>
+        <table id="customers">
+            <tr>
+                <th>Mã sản phẩm</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Thao tác</th>
+                <th>Thao tác</th>
+            </tr>
+            @foreach (var sp in dsSanPham)
+            {
+                <tr>
+                    <td>@sp.maSp</td>
+                    <td>@sp.tenSp</td>
+                    <td>@sp.giaSp</td>
+                    <td><a href="~/UI/MH_SUA_SANPHAM.cshtml?id=@sp.maSp">Sửa</a></td>
+                    <td><a href="~/UI/MH_XOA_SANPHAM.cshtml">Xóa</a></td>
+                </tr>
+            }
+        </table>
+
+    </div>
+</body>
+</html>
